@@ -37,8 +37,15 @@ from clearpath_generator_common.description.generator import DescriptionGenerato
 
 
 def main():
-    setup_path = BaseGenerator.get_args()
-    dg = DescriptionGenerator(setup_path)
+    #setup_path = BaseGenerator.get_args()
+    setup_path, robot_yaml = BaseGenerator.get_args()
+    
+    print()
+    print(f"in generate_description: setup_path == {setup_path}")
+    print(f"in generate_description: robot_yaml == {robot_yaml}")
+    print()
+
+    dg = DescriptionGenerator(setup_path, robot_yaml)
     dg.generate()
 
 
