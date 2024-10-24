@@ -41,9 +41,14 @@ PACKAGE = '<package><name>clearpath_generator_common</name></package>\n'
 
 
 def main():
+    # setup_path = BaseGenerator.get_args()
+    # sdg = SemanticDescriptionGenerator(setup_path)
+    # sdg.generate()
+
     setup_path = BaseGenerator.get_args()
     sdg = SemanticDescriptionGenerator(setup_path)
     sdg.generate()
+
     # Create pseudo package
     with open(os.path.join(setup_path, 'package.xml'), 'w+') as f:
         f.write(PACKAGE)

@@ -4,6 +4,8 @@
 #
 # @author    Roni Kreinin <rkreinin@clearpathrobotics.com>
 # @copyright (c) 2023, Clearpath Robotics, Inc., All rights reserved.
+# Modifications to accept custom yaml names by 
+# @author   Azmyin Md. Kamal <azmyin12@gmail.com>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -41,8 +43,8 @@ def main():
     setup_path, robot_yaml = BaseGenerator.get_args()
     
     print()
-    print(f"in generate_description: setup_path == {setup_path}")
-    print(f"in generate_description: robot_yaml == {robot_yaml}")
+    print(f"in generate_description: setup_path == {type(setup_path)}")
+    print(f"in generate_description: robot_yaml == {type(robot_yaml)}")
     print()
 
     dg = DescriptionGenerator(setup_path, robot_yaml)

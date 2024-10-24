@@ -46,8 +46,7 @@ from clearpath_generator_common.description.writer import XacroWriter
 
 
 class DescriptionGenerator(BaseGenerator):
-    def __init__(self,
-                 setup_path: str = '/etc/clearpath/', robot_yaml='robot.yaml') -> None:
+    def __init__(self, setup_path: str = '/etc/clearpath/', robot_yaml: str ='robot.yaml') -> None:
         super().__init__(setup_path, robot_yaml)
         self.xacro_writer = XacroWriter(self.setup_path, self.serial_number)
 

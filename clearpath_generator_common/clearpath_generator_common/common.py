@@ -291,7 +291,10 @@ class BaseGenerator():
         # Define paths
         self.robot_yaml_file = robot_yaml # Initialize
         # self.config_path = os.path.join(setup_path, 'robot.yaml')
-        self.config_path = os.path.join(setup_path, self.robot_yaml_file)
+        print()
+        print(type(setup_path))
+        print()
+        self.config_path = os.path.join(setup_path, robot_yaml)
         
         print()
         print(f"BaseGenerator: self.config_path --> {self.config_path}")
@@ -363,5 +366,5 @@ class BaseGenerator():
             else:
                 # TODO raise a ValueNotFound error
                 pass
-
-        return setup_path, robot_yaml
+        
+        return setup_path, robot_yaml # Both are returned as `str`
