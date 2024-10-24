@@ -29,6 +29,7 @@
 # Redistribution and use in source and binary forms, with or without
 # modification, is not permitted without the express permission
 # of Clearpath Robotics.
+
 from clearpath_generator_common.common import BaseGenerator
 from clearpath_generator_common.description.writer import XacroWriter
 from clearpath_generator_common.semantic_description.manipulators import (
@@ -38,8 +39,8 @@ from clearpath_generator_common.semantic_description.manipulators import (
 
 class SemanticDescriptionGenerator(BaseGenerator):
 
-    def __init__(self, setup_path: str = '/etc/clearpath/') -> None:
-        super().__init__(setup_path)
+    def __init__(self, setup_path: str = '/etc/clearpath/', robot_yaml: str ='robot.yaml') -> None:
+        super().__init__(setup_path, robot_yaml)
         self.xacro_writer = XacroWriter(self.setup_path, self.serial_number, '.srdf.xacro')
 
     def generate(self) -> None:

@@ -291,9 +291,6 @@ class BaseGenerator():
         # Define paths
         self.robot_yaml_file = robot_yaml # Initialize
         # self.config_path = os.path.join(setup_path, 'robot.yaml')
-        print()
-        print(type(setup_path))
-        print()
         self.config_path = os.path.join(setup_path, robot_yaml)
         
         print()
