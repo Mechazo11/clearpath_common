@@ -45,10 +45,10 @@ def main():
     #setup_path = BaseGenerator.get_args()
     setup_path, robot_yaml = BaseGenerator.get_args()
     # DEBUG
-    print()
-    print(f"in generate_description: setup_path == {type(setup_path)}")
-    print(f"in generate_description: robot_yaml == {type(robot_yaml)}")
-    print()
+    # print()
+    # print(f"in generate_description: setup_path == {type(setup_path)}")
+    # print(f"in generate_description: robot_yaml == {type(robot_yaml)}")
+    # print()
     dg = DescriptionGenerator(setup_path, robot_yaml)
     dg.generate()
 
