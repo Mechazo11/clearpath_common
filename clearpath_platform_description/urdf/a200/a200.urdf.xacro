@@ -4,7 +4,9 @@
   <xacro:arg name="namespace" default="" />
   <xacro:arg name="is_sim" default="false" />
   <xacro:arg name="serial_port" default="/dev/clearpath/prolific" />
+  <!-- Define ros2_controllers here -->
   <xacro:arg name="gazebo_controllers" default="$(find clearpath_control)/config/a200/control.yaml"/>
+  
   <xacro:arg name="use_platform_controllers" default="true"/>
 
   <!-- Included URDF/XACRO Files -->
@@ -104,8 +106,10 @@
       <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:a200_wheel>
 
+    <!-- Add wheel slip plugins -->
     <gazebo>
-      <plugin filename="libignition-gazebo-wheel-slip-system.so" name="ignition::gazebo::systems::WheelSlip">
+    <!-- Based on this example: https://github.com/gazebosim/gz-sim/blob/gz-sim9/test/worlds/trisphere_cycle_wheel_slip.sdf -->
+      <plugin filename="gz-sim-wheel-slip-system" name="gz::sim::systems::WheelSlip">
         <wheel link_name="front_left_wheel">
           <slip_compliance_lateral>1.0</slip_compliance_lateral>
           <slip_compliance_longitudinal>1.0</slip_compliance_longitudinal>

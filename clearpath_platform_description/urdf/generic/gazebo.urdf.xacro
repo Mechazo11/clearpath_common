@@ -3,7 +3,8 @@
   <xacro:if value="$(arg is_sim)">
     <gazebo>
       <!-- <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin"> -->
-      <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <plugin filename="gz_ros2_control-system"
+          name="gz_ros2_control::GazeboSimROS2ControlPlugin">
         <parameters>$(arg gazebo_controllers)</parameters>
         <ros>
           <remapping>~/odom:=platform/odom</remapping>
@@ -21,7 +22,12 @@
     </gazebo>
 
     <gazebo>
-      <plugin filename="gz-sim-pose-publisher-system" name="gz::sim::systems::PosePublisher">
+      <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+      </plugin>
+      <plugin filename="gz-sim-pose-publisher-system"
+              name="gz::sim::systems::PosePublisher">
         <publish_link_pose>true</publish_link_pose>
         <publish_nested_model_pose>true</publish_nested_model_pose>
         <use_pose_vector_msg>true</use_pose_vector_msg>
