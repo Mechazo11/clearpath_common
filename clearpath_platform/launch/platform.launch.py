@@ -110,15 +110,6 @@ def generate_launch_description():
               ]
             ),
 
-            # Launch clearpath_control/control.launch.py which is just robot_localization.
-            IncludeLaunchDescription(
-              PythonLaunchDescriptionSource(launch_file_control),
-              launch_arguments=[
-                  ('setup_path', setup_path),
-                  ('use_sim_time', use_sim_time),
-              ]
-            ),
-
             # Launch localization (ekf node)
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(launch_file_localization),
@@ -136,13 +127,24 @@ def generate_launch_description():
                     ('use_sim_time', use_sim_time)]
             ),
 
-            # Launch clearpath_control/teleop_joy.launch.py which is tele-operation using a
-            # physical joystick.
+            # Deactivated 11/28/24 in favor of top level custom nodes since this node conflicts when
+            # attempting to send out TwistStamped messages required by ros2_controllers
+            # # Launch clearpath_control/teleop_joy.launch.py which is tele-operation using a
+            # # physical joystick.
+            # IncludeLaunchDescription(
+            #     PythonLaunchDescriptionSource(launch_file_teleop_joy),
+            #     launch_arguments=[
+            #         ('setup_path', setup_path),
+            #         ('use_sim_time', use_sim_time)]
+            # ),
+
+            # Launch clearpath_control/control.launch.py which loads all the controllers
             IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(launch_file_teleop_joy),
-                launch_arguments=[
-                    ('setup_path', setup_path),
-                    ('use_sim_time', use_sim_time)]
+              PythonLaunchDescriptionSource(launch_file_control),
+              launch_arguments=[
+                  ('setup_path', setup_path),
+                  ('use_sim_time', use_sim_time),
+              ]
             ),
         ]
     )

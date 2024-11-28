@@ -90,7 +90,8 @@ def generate_launch_description():
         name='teleop_twist_joy_node',
         parameters=[
             config_teleop_joy,
-            {'use_sim_time': use_sim_time}],
+            {'use_sim_time': use_sim_time},
+            {'publish_stamped_twist': True}],
         remappings=[
             ('joy', 'joy_teleop/joy'),
             ('cmd_vel', 'joy_teleop/cmd_vel'),

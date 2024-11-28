@@ -43,6 +43,7 @@ REMAPPINGS = [
     ('joint_states', 'platform/joint_states'),
     ('dynamic_joint_states', 'platform/dynamic_joint_states'),
     ('platform_velocity_controller/odom', 'platform/odom'),
+    ('platform_velocity_controller/cmd_vel', 'platform/joy_teleop/cmd_vel'),
     ('platform_velocity_controller/cmd_vel_unstamped', 'platform/cmd_vel_unstamped'),
     ('platform_velocity_controller/reference', 'platform/cmd_vel_unstamped'),
     ('/diagnostics', 'diagnostics'),
@@ -82,8 +83,8 @@ def launch_setup(context, *args, **kwargs):
         executable='spawner',
         #arguments=['--controller-manager-timeout', '60', 'joint_state_broadcaster'],
         arguments=['joint_state_broadcaster'],
-        #output='screen',
-        #additional_env={'ROS_SUPER_CLIENT': 'True'},
+        output='screen',
+        additional_env={'ROS_SUPER_CLIENT': 'True'},
     ))
     # Add Platform Velocity Controller
     controllers.append(Node(
@@ -91,8 +92,8 @@ def launch_setup(context, *args, **kwargs):
         executable='spawner',
         #arguments=['--controller-manager-timeout', '60', 'platform_velocity_controller'],
         arguments=['platform_velocity_controller'],
-        #output='screen',
-        #additional_env={'ROS_SUPER_CLIENT': 'True'},
+        output='screen',
+        additional_env={'ROS_SUPER_CLIENT': 'True'},
     ))
     # If Simulation, Add All Listed Controllers
     for namespace in context_control:
@@ -107,8 +108,8 @@ def launch_setup(context, *args, **kwargs):
                 executable='spawner',
                 #arguments=['--controller-manager-timeout', '60', controller],
                 arguments=[controller],
-                #output='screen',
-                #additional_env={'ROS_SUPER_CLIENT': 'True'},
+                output='screen',
+                additional_env={'ROS_SUPER_CLIENT': 'True'},
                 condition=IfCondition(use_sim_time),
             ))
     return [GroupAction(controllers)]
