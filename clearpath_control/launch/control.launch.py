@@ -80,17 +80,19 @@ def launch_setup(context, *args, **kwargs):
     controllers.append(Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['--controller-manager-timeout', '60', 'joint_state_broadcaster'],
-        output='screen',
-        additional_env={'ROS_SUPER_CLIENT': 'True'},
+        #arguments=['--controller-manager-timeout', '60', 'joint_state_broadcaster'],
+        arguments=['joint_state_broadcaster'],
+        #output='screen',
+        #additional_env={'ROS_SUPER_CLIENT': 'True'},
     ))
     # Add Platform Velocity Controller
     controllers.append(Node(
         package='controller_manager',
         executable='spawner',
-        arguments=['--controller-manager-timeout', '60', 'platform_velocity_controller'],
-        output='screen',
-        additional_env={'ROS_SUPER_CLIENT': 'True'},
+        #arguments=['--controller-manager-timeout', '60', 'platform_velocity_controller'],
+        arguments=['platform_velocity_controller'],
+        #output='screen',
+        #additional_env={'ROS_SUPER_CLIENT': 'True'},
     ))
     # If Simulation, Add All Listed Controllers
     for namespace in context_control:
@@ -103,9 +105,10 @@ def launch_setup(context, *args, **kwargs):
                 name='test',
                 package='controller_manager',
                 executable='spawner',
-                arguments=['--controller-manager-timeout', '60', controller],
-                output='screen',
-                additional_env={'ROS_SUPER_CLIENT': 'True'},
+                #arguments=['--controller-manager-timeout', '60', controller],
+                arguments=[controller],
+                #output='screen',
+                #additional_env={'ROS_SUPER_CLIENT': 'True'},
                 condition=IfCondition(use_sim_time),
             ))
     return [GroupAction(controllers)]
