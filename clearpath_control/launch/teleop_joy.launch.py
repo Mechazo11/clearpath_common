@@ -91,7 +91,7 @@ def generate_launch_description():
         parameters=[
             config_teleop_joy,
             {'use_sim_time': use_sim_time},
-            {'publish_stamped_twist': True}],
+            {'publish_stamped_twist': False}], # A separate node will take this data and convert it to TwistStamped pose message
         remappings=[
             ('joy', 'joy_teleop/joy'),
             ('cmd_vel', 'joy_teleop/cmd_vel'),
