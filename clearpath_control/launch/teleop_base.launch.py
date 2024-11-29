@@ -99,10 +99,21 @@ def generate_launch_description():
             config_twist_mux,
             {'use_sim_time': use_sim_time}]
     )
+    
+    twist_to_twist_stamped = Node(
+        package='clearpath_gz', 
+        executable='twistmusk_to_controller_node', 
+        name='twiststamped_to_controller',
+        parameters=[
+            {'input_joy_topic': 'platform/cmd_vel_unstamped'},
+            {'controller_cmd_vel': 'platform_velocity_controller/cmd_vel'},
+        ]
+    )
 
     ld = LaunchDescription()
     ld.add_action(arg_setup_path)
     ld.add_action(arg_use_sim_time)
     ld.add_action(node_interactive_marker_twist_server)
     ld.add_action(node_twist_mux)
+    ld.add_action(twist_to_twist_stamped) # Only after spawing robot
     return ld
