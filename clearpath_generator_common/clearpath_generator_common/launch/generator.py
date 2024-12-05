@@ -5,7 +5,8 @@ Software License Agreement (BSD)
 
 @author    Roni Kreinin <rkreinin@clearpathrobotics.com>
 @copyright (c) 2023, Clearpath Robotics, Inc., All rights reserved.
-Adaptation for Gazebo Harmonic and support for custom YAML file handling by 
+
+Adaptation for Gazebo Harmonic and support for custom YAML file by 
 @author Azmyin Md. Kamal <azmyin12@gmail.com>.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,7 +33,6 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
-
 
 # Import
 import os

@@ -25,7 +25,3 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-
-# Redistribution and use in source and binary forms, with or without
-# modification, is not permitted without the express permission
-# of Clearpath Robotics.
