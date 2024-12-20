@@ -17,15 +17,17 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <!-- Without these packages, clearpath_sensor_description will no longer build correctly -->
-  <depend>asus_xtion_description</depend>
-  <depend>microstrain_inertial_description</depend>
+  <!-- <depend>asus_xtion_description</depend> -->
+  <!-- <depend>microstrain_inertial_description</depend>-->
+  <!-- Required package -->
   <depend>openni2_camera</depend>
 
-  <!-- <exec_depend>microstrain_inertial_description</exec_depend> -->
+  <exec_depend>microstrain_inertial_description</exec_depend>
+  <exec_depend>asus_xtion_description</exec_depend>
+  <exec_depend>velodyne_description</exec_depend>
+
   <!-- Realsense2 camera depricated -->
   <!-- <exec_depend>realsense2_description</exec_depend> --> 
-  <!-- <exec_depend>velodyne_description</exec_depend> -->
 
   <export>
     <build_type>ament_cmake</build_type>
