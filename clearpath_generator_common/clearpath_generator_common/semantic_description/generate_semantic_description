@@ -8,6 +8,9 @@ Software License Agreement (BSD)
 Modifications to accept custom robot yaml configuration file name by 
 @author   Azmyin Md. Kamal <azmyin12@gmail.com>
 
+Notes by AZ: As far as I understand, "semantics" here refers to semantically 
+reference the robot structure.
+
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 

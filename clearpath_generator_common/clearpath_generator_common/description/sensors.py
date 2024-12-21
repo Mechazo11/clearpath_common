@@ -35,7 +35,8 @@ from clearpath_config.sensors.types.cameras import (
     BaseCamera,
     FlirBlackfly,
     IntelRealsense,
-    StereolabsZed
+    StereolabsZed,
+    AsusXtion
 )
 from clearpath_config.sensors.types.imu import (
     BaseIMU,
@@ -49,6 +50,11 @@ from clearpath_config.sensors.types.sensor import BaseSensor
 
 
 class SensorDescription():
+    """
+    Class to hold all sensor descriptions.
+    
+    Updated to have setters to enable manual override of various property variables.
+    """
     class BaseDescription():
         pkg_clearpath_sensors_description = 'clearpath_sensors_description'
 
@@ -58,6 +64,7 @@ class SensorDescription():
         RPY = 'rpy'
 
         def __init__(self, sensor: BaseSensor) -> None:
+            """Construct a BaseDescription class."""
             self.sensor = sensor
             self.package = self.pkg_clearpath_sensors_description
             self.path = 'urdf/'
@@ -71,17 +78,33 @@ class SensorDescription():
         def name(self) -> str:
             return self.sensor.name
 
+        @name.setter
+        def name(self, value: str) -> None:
+            self.sensor.name = value
+
         @property
         def model(self) -> str:
             return self.sensor.SENSOR_MODEL
+        
+        @model.setter
+        def model(self, value: str) -> None:
+            self.sensor.SENSOR_MODEL = value
 
         @property
         def xyz(self) -> List[float]:
             return self.sensor.xyz
 
+        @xyz.setter
+        def xyz(self, value: List[float]) -> None:
+            self.sensor.xyz = value
+
         @property
         def rpy(self) -> List[float]:
             return self.sensor.rpy
+        
+        @rpy.setter
+        def rpy(self, value: List[float]) -> None:
+            self.sensor.rpy = value
 
     class Lidar2dDescription(BaseDescription):
         ANGULAR_RESOLUTION = 'ang_res'
@@ -140,6 +163,7 @@ class SensorDescription():
             })
 
     class CameraDescription(BaseDescription):
+        """Base class for camera description classes."""
         UPDATE_RATE = 'update_rate'
 
         def __init__(self, sensor: BaseCamera) -> None:
@@ -154,6 +178,19 @@ class SensorDescription():
         IMAGE_HEIGHT = 'image_height'
 
         def __init__(self, sensor: IntelRealsense) -> None:
+            super().__init__(sensor)
+
+            self.parameters.update({
+                self.IMAGE_HEIGHT: sensor.color_height,
+                self.IMAGE_WIDTH: sensor.color_width,
+            })
+
+    class AsusXtionDesciption(CameraDescription):
+        """Class that defines the description of a Asus Xiton camera."""
+        IMAGE_WIDTH = 'image_width'
+        IMAGE_HEIGHT = 'image_height'
+
+        def __init__(self, sensor: AsusXtion) -> None:
             super().__init__(sensor)
 
             self.parameters.update({

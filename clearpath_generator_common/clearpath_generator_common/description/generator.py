@@ -176,30 +176,98 @@ class DescriptionGenerator(BaseGenerator):
             self.xacro_writer.write_newline()
 
     def generate_sensors(self) -> None:
+        """
+        Generate all sensor xacro.include commands in robot.urdf.xacro file.
+        
+        self.clearpath_config may have been inherited from BaseGenerator class
+        """
+        
+        def debug_lock():
+            """Locks system in an infinite loop for debugging."""
+            print("LOCK")
+            while 1:
+                pass
+        
         self.xacro_writer.write_comment('Sensors')
-        self.xacro_writer.write_newline()
-        sensors = self.clearpath_config.sensors.get_all_sensors()
+        self.xacro_writer.write_newline() # Put a new line
+        sensors = self.clearpath_config.sensors.get_all_sensors() # List[]
         for sensor in sensors:
             sensor_description = SensorDescription(sensor)
+            
+            if sensor_description.model == "asus_xtion":
+                print(f"A hacky way of adding asus xtion sesnor.")
 
-            self.xacro_writer.write_comment(
-                '{0}'.format(sensor_description.name)
-            )
+                # ! WARNING: Bypassing the good stuff in clearpath_config due to time constraints.
+                # Only updating what is necessary
+                
+                # Using BaseDesciption setters
+                # sensor_description.parameters: {'name': 'camera_0', 'parent_link': 'fath_pivot_0_mount', 
+                #                                'update_rate': 30, 'image_height': 480, 'image_width': 640}
+                sensor_description.name = "camera_0"
+                sensor_description.package = "ros2_asus_xtion"
+                sensor_description.model = "asus_xtion"
+                sensor_description.path = "urdf/"
+                
+                sensor_description.parameters.update({
+                    'update_rate': 30,
+                    'image_height': 480,
+                    'image_width': 640,
+                })
 
-            self.xacro_writer.write_include(
-                package=sensor_description.package,
-                file=sensor_description.model,
-                path=sensor_description.path
-            )
+                # "camera_0"
+                self.xacro_writer.write_comment(
+                    '{0}'.format(sensor_description.name) # str
+                )
 
-            self.xacro_writer.write_macro(
-                macro='{0}'.format(sensor_description.model),
-                parameters=sensor_description.parameters,
-                blocks=XacroWriter.add_origin(
-                    sensor_description.xyz, sensor_description.rpy)
-            )
+                # <xacro:include filename="$(find ros2_asus_xtion_description)/urdf/asus_xtion.urdf.xacro"/>
+                self.xacro_writer.write_include(
+                    package=sensor_description.package, # package
+                    file=sensor_description.model, # camera model
+                    path=sensor_description.path # path to urdf folder
+                )
+
+                # TODO need to ensure xyz and rpy values are correct
+                self.xacro_writer.write_macro(
+                    macro='{0}'.format(sensor_description.model),
+                    parameters=sensor_description.parameters,
+                    blocks=XacroWriter.add_origin(
+                        sensor_description.xyz, sensor_description.rpy)
+                )
+
+            else:
+                # All other sensors supported by Clearpath robotics
+                
+                # "camera_0"
+                self.xacro_writer.write_comment(
+                    '{0}'.format(sensor_description.name)
+                )
+
+                # <xacro:include filename="$(find clearpath_sensors_description)/urdf/intel_realsense.urdf.xacro"/>
+                self.xacro_writer.write_include(
+                    package=sensor_description.package, # clearpath_sensors_description
+                    file=sensor_description.model, # intel_realsense
+                    path=sensor_description.path # urdf/
+                )
+
+                """
+                <xacro:intel_realsense name="camera_0" parent_link="fath_pivot_0_mount" update_rate="30" image_height="480" image_width="640">
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                </xacro:intel_realsense>
+
+                sensor_description.parameters: 
+                sensor_description.parameters: {'name': 'camera_0', 'parent_link': 'fath_pivot_0_mount', 'update_rate': 30, 'image_height': 480, 'image_width': 640}
+
+                """
+                self.xacro_writer.write_macro(
+                    macro='{0}'.format(sensor_description.model),
+                    parameters=sensor_description.parameters,
+                    blocks=XacroWriter.add_origin(
+                        sensor_description.xyz, sensor_description.rpy)
+                )
 
             self.xacro_writer.write_newline()
+
+            debug_lock()
 
     def generate_manipulators(self) -> None:
         self.xacro_writer.write_comment('Manipulators')
