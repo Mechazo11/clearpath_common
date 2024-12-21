@@ -204,7 +204,7 @@ class DescriptionGenerator(BaseGenerator):
                 # sensor_description.parameters: {'name': 'camera_0', 'parent_link': 'fath_pivot_0_mount', 
                 #                                'update_rate': 30, 'image_height': 480, 'image_width': 640}
                 sensor_description.name = "camera_0"
-                sensor_description.package = "ros2_asus_xtion"
+                sensor_description.package = "asus_xtion_description"
                 sensor_description.model = "asus_xtion"
                 sensor_description.path = "urdf/"
                 
@@ -266,8 +266,6 @@ class DescriptionGenerator(BaseGenerator):
                 )
 
             self.xacro_writer.write_newline()
-
-            debug_lock()
 
     def generate_manipulators(self) -> None:
         self.xacro_writer.write_comment('Manipulators')
