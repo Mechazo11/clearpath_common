@@ -17,11 +17,11 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <!-- <depend>asus_xtion_description</depend> -->
-  <!-- <depend>microstrain_inertial_description</depend>-->
   <!-- Required package -->
-  <depend>openni2_camera</depend>
+  <!-- Openni2 may be useful if real sensor is used -->
+  <!-- <depend>openni2_camera</depend> -->
 
+  <exec_depend>realsense2_description</exec_depend>
   <exec_depend>microstrain_inertial_description</exec_depend>
   <exec_depend>asus_xtion_description</exec_depend>
   <exec_depend>velodyne_description</exec_depend>

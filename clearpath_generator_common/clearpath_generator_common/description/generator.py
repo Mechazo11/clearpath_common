@@ -182,12 +182,6 @@ class DescriptionGenerator(BaseGenerator):
         self.clearpath_config may have been inherited from BaseGenerator class
         """
         
-        def debug_lock():
-            """Locks system in an infinite loop for debugging."""
-            print("LOCK")
-            while 1:
-                pass
-        
         self.xacro_writer.write_comment('Sensors')
         self.xacro_writer.write_newline() # Put a new line
         sensors = self.clearpath_config.sensors.get_all_sensors() # List[]
@@ -204,9 +198,9 @@ class DescriptionGenerator(BaseGenerator):
                 # sensor_description.parameters: {'name': 'camera_0', 'parent_link': 'fath_pivot_0_mount', 
                 #                                'update_rate': 30, 'image_height': 480, 'image_width': 640}
                 sensor_description.name = "camera_0"
-                sensor_description.package = "asus_xtion_description"
-                sensor_description.model = "asus_xtion"
-                sensor_description.path = "urdf/"
+                sensor_description.package = "asus_xtion_description" # package containing the urdf file
+                sensor_description.model = "asus_xtion" # name of the urdf file
+                sensor_description.path = "urdf/" # folder containing the urdf file
                 
                 sensor_description.parameters.update({
                     'update_rate': 30,
@@ -229,6 +223,42 @@ class DescriptionGenerator(BaseGenerator):
                 # TODO need to ensure xyz and rpy values are correct
                 self.xacro_writer.write_macro(
                     macro='{0}'.format(sensor_description.model),
+                    parameters=sensor_description.parameters,
+                    blocks=XacroWriter.add_origin(
+                        sensor_description.xyz, sensor_description.rpy)
+                )
+            elif sensor_description.model == "intel_realsense_sim":
+                print(f"A hacky way of adding intel realsense simulated RGBD sensor bypassing clearpath_config.")
+                
+                sensor_description.name = "camera_0"
+                sensor_description.package = "realsense2_description" # package containing the urdf file
+                sensor_description.model = "d435" # name of the urdf file
+                sensor_description.path = "urdf/" # folder containing the urdf file
+                
+                sensor_description.parameters.update({
+                    'update_rate': 30,
+                    'image_height': 480,
+                    'image_width': 640,
+                })
+
+                # "camera_0"
+                self.xacro_writer.write_comment(
+                    '{0}'.format(sensor_description.name) # str
+                )
+
+                # <xacro:include filename="$(find ros2_asus_xtion_description)/urdf/asus_xtion.urdf.xacro"/>
+                self.xacro_writer.write_include(
+                    package=sensor_description.package, # package
+                    file=sensor_description.model, # camera model
+                    path=sensor_description.path # path to urdf folder
+                )
+                """
+                <xacro:sensor_d435 name="camera_0" parent_link="fath_pivot_0_mount" update_rate="30" image_height="480" image_width="640">
+                    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                </xacro:sensor_d435>
+                """
+                self.xacro_writer.write_macro(
+                    macro='sensor_{0}'.format(sensor_description.model),
                     parameters=sensor_description.parameters,
                     blocks=XacroWriter.add_origin(
                         sensor_description.xyz, sensor_description.rpy)

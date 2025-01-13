@@ -2,9 +2,11 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>clearpath_common</name>
-  <version>0.3.4</version>
-  <description>Clearpath Common Metapackage</description>
+  <description>Metapackages containing common features of Clearpath Simulator</description>
+  <!-- Gazebo harmonic version maintained by -->
+  <maintainer email="azmyin12@gmail.com">Azmyin Md. Kamal</maintainer>
 
+  <!-- Original version by -->
   <maintainer email="lcamero@clearpathrobotics.com">Luis Camero</maintainer>
   <maintainer email="rkreinin@clearpathrobotics.com">Roni Kreinin</maintainer>
   <maintainer email="tbaltovski@clearpathrobotics.com">Tony Baltovski</maintainer>
